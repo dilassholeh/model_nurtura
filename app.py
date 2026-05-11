@@ -4,6 +4,7 @@ import numpy as np
 import os
 
 app = Flask(__name__)
+print(features)
 
 # load model & scaler
 model = joblib.load("model_kmeans.pkl")
@@ -56,7 +57,6 @@ def predict():
             "status": "error",
             "message": str(e)
         }), 500
-
 
 @app.route('/health', methods=['GET'])
 def health():
