@@ -4,45 +4,33 @@ import numpy as np
 import os
 
 app = Flask(__name__)
-print(features)
 
 # load model & scaler
 model = joblib.load("model_kmeans.pkl")
 scaler = joblib.load("scaler.pkl")
 
-CLUSTER_BERESIKO = 0
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-    
-        data = request.get_json()
 
-        if not data:
-            return jsonify({
-                "status": "error",
-                "message": "JSON tidak ditemukan"
-            }), 400
+        data = request.get_json()
 
         features = data.get("features")
 
-        if features is None:
-            return jsonify({
-                "status": "error",
-                "message": "features tidak ditemukan"
-            }), 400
+        print("INPUT:", features)
 
-        # ubah ke numpy array
         input_arr = np.array(features).reshape(1, -1)
 
-        # scaling
+        print("ARRAY:", input_arr)
+
         input_scaled = scaler.transform(input_arr)
 
-        # prediksi
+        print("SCALED:", input_scaled)
+
         cluster = model.predict(input_scaled)[0]
 
-        # mapping hasil
+        print("PREDIKSI:", cluster)
+
         result = f"Cluster {cluster}"
 
         return jsonify({
@@ -57,6 +45,7 @@ def predict():
             "status": "error",
             "message": str(e)
         }), 500
+
 
 @app.route('/health', methods=['GET'])
 def health():
