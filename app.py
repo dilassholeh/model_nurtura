@@ -6,8 +6,8 @@ import os
 app = Flask(__name__)
 
 # load model & scaler
-model = joblib.load("model_kmeans_new.pkl")
-scaler = joblib.load("scaler_new.pkl")
+model = joblib.load("model_kmeans.pkl")
+scaler = joblib.load("scaler.pkl")
 
 CLUSTER_BERESIKO = 0
 
