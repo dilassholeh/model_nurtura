@@ -12,7 +12,6 @@ scaler = joblib.load("scaler.pkl")
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-
         data = request.get_json()
 
         features = data.get("features")
@@ -29,9 +28,14 @@ def predict():
 
         cluster = model.predict(input_scaled)[0]
 
-        print("PREDIKSI:", cluster)
+        print("PREDIKSI CLUSTER:", cluster)
 
-        result = f"Cluster {cluster}"
+        # 🔥 FINAL LOGIC SESUAI HASIL ANALISIS KAMU
+        # cluster 0 = centroid lebih tinggi = beresiko
+        if cluster == 0:
+            result = "Beresiko"
+        else:
+            result = "Tidak beresiko"
 
         return jsonify({
             "status": "success",
@@ -40,7 +44,6 @@ def predict():
         })
 
     except Exception as e:
-
         return jsonify({
             "status": "error",
             "message": str(e)
@@ -55,7 +58,6 @@ def health():
 
 
 if __name__ == "__main__":
-
     port = int(os.environ.get("PORT", 8080))
 
     app.run(
