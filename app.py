@@ -30,7 +30,8 @@ def predict():
 
         print("PREDIKSI CLUSTER:", cluster)
 
-       
+        # 🔥 FINAL LOGIC SESUAI HASIL ANALISIS KAMU
+        # cluster 0 = centroid lebih tinggi = beresiko
         if cluster == 0:
             result = "Beresiko"
         else:
